@@ -1,0 +1,32 @@
+links:
+  shop: 'https://antecedentium-store.tebex.io/'
+  discord: 'https://discord.gg/acvqsKDQkV'
+
+command-config:
+  stop-command:
+    min5: '&c&lBROADCAST  &eRestarting main server in 5 minutes.'
+    min4: '&c&lBROADCAST  &eRestarting main server in 4 minutes.'
+    min3: '&c&lBROADCAST  &eRestarting main server in 3 minutes.'
+    min2: '&c&lBROADCAST  &eRestarting main server in 2 minutes.'
+    min1: '&c&lBROADCAST  &eRestarting main server in 1 minute.'
+    now: '&c&lBROADCAST  &eRestarting main server NOW!'
+
+modules:
+  donkey-dupe:
+    enabled: true
+    messages:
+      dupe-disabled: '&cDonkey dupe is disabled, use SalDupe.'
+  god-mode:
+    enabled: true
+    messages:
+      god-mode-disabled: '&cGod mode exploit is disabled sorry.'
+  end-gateway-crash:
+    enabled: true
+    messages:
+      disabled: '&cGoing through an end gateway while riding an entity/minecart is disabled.'
+
+messages:
+  suicide-message: '&cYou commited suicide'
+
+replacements:
+  max-storage: '100G'

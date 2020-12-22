@@ -1,0 +1,41 @@
+name: AntecedentiumUtil
+author: Antecedentium
+version: 1.1
+main: com.antecedentium.AnteCedentium
+commands:
+  stats:
+    usage: /stats
+    description: Get stats about the server.
+    aliases:
+      - server
+  buy:
+    usage: /buy
+    description: Get the store link.
+    aliases:
+      - shop
+      - donate
+  discord:
+    usage: /discord
+    description: Get the discord invitation link.
+    aliases:
+      - disc
+  antecedentium-reload:
+    usage: /antecedentium-reload
+    description: Reload the antecedentium plugin.
+  invsee:
+    usage: /invsee <player>
+    description: See what's inside a player inventory.
+  help:
+    usage: /help
+    description: Help command.
+  kill:
+    usage: /kill
+    description: Suicide.
+    aliases:
+      - suicide
+  stop:
+    usage: /stop
+    description: Stop the server.
+  everyone:
+    usage: /everyone <message>
+    description: Makes everyone chat.
