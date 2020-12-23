@@ -6,6 +6,7 @@ import com.antecedentium.events.DonkeyChestListener;
 import com.antecedentium.events.EndGatewayListener;
 import com.antecedentium.events.GodModeListener;
 import com.antecedentium.events.PacketListener;
+import com.antecedentium.worker.workers.TabWorker;
 import com.antecedentium.worker.workers.WorldStatsWorker;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,6 +25,7 @@ public class AnteCedentium extends JavaPlugin {
         saveConfig();
 
         statsWorker = new WorldStatsWorker();
+        new TabWorker();
 
         /* Commands */
         commandHandler = new CommandHandler();

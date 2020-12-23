@@ -24,6 +24,16 @@ modules:
     enabled: true
     messages:
       disabled: '&cGoing through an end gateway while riding an entity/minecart is disabled.'
+  tab:
+    enabled: true
+    config:
+      info:
+        - "Updated AntecedentiumUtil plugin and added custom tab"
+        - "to the server."
+      footer:
+        contact: "terroristswin777@gmail.com"
+        discussion: "https://discord.gg/9j2bdwyADp"
+        store: "https://antecedentium-store.tebex.io/"
 
 messages:
   suicide-message: '&cYou commited suicide'

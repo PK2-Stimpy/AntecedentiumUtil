@@ -2,6 +2,7 @@ name: AntecedentiumUtil
 author: Antecedentium
 version: 1.1
 main: com.antecedentium.AnteCedentium
+depend: [PlaceholderAPI]
 commands:
   stats:
     usage: /stats
