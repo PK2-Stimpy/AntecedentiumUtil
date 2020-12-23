@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TabWorker extends Worker {
     public TabWorker() {
-        super(5000);
+        super(AnteCedentium.INSTANCE.getConfig().getInt("modules.tab.config.updated-every")*100);
     }
 
     private String getServerVersion() {
@@ -27,6 +27,7 @@ public class TabWorker extends Worker {
     public void run() {
         if(!AnteCedentium.INSTANCE.getConfig().getBoolean("modules.tab.enabled"))
             return;
+        this.delay = AnteCedentium.INSTANCE.getConfig().getInt("modules.tab.config.updated-every")*100;
         try {
             StringBuilder headerString = new StringBuilder();
             List<String> headerArgs = AnteCedentium.INSTANCE.getConfig().getStringList("modules.tab.config.info");

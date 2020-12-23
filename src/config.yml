@@ -34,6 +34,7 @@ modules:
         contact: "terroristswin777@gmail.com"
         discussion: "https://discord.gg/9j2bdwyADp"
         store: "https://antecedentium-store.tebex.io/"
+      updated-every: 1
 
 messages:
   suicide-message: '&cYou commited suicide'

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Worker {
     public static ArrayList<Worker> workers = new ArrayList<>();
     private Thread thread;
-    private int delay;
+    public int delay;
 
     public Worker(int delay) {
         this.delay = delay;
