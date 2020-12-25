@@ -1,6 +1,7 @@
 package com.antecedentium.worker.workers;
 
 import com.antecedentium.AnteCedentium;
+import com.antecedentium.reflections.packet.PacketObject;
 import com.antecedentium.util.MathUtil;
 import com.antecedentium.worker.Worker;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -42,23 +43,16 @@ public class TabWorker extends Worker {
                     "\n" +
                     headerString.toString() + "\n");
 
-            Class<?> packetClass = Class.forName("net.minecraft.server." + getServerVersion() + ".PacketPlayOutPlayerListHeaderFooter");
-
             for(Player player : Bukkit.getOnlinePlayers()) {
                 Class<?> craftPlayer = Class.forName("org.bukkit.craftbukkit." + getServerVersion() + ".entity.CraftPlayer");
                 Object handle = craftPlayer.cast(player).getClass().getMethod("getHandle").invoke(craftPlayer.cast(player));
                 int ping = handle.getClass().getDeclaredField("ping").getInt(handle);
 
-                Object packetPlayOutPlayerListHeaderFooter = packetClass.getConstructors()[0].newInstance();
-                Field a = packetPlayOutPlayerListHeaderFooter.getClass().getDeclaredField("a");
-                a.setAccessible(true);
-                Field b = packetPlayOutPlayerListHeaderFooter.getClass().getDeclaredField("b");
-                b.setAccessible(true);
-
-                a.set(packetPlayOutPlayerListHeaderFooter, header);
+                PacketObject packetPlayOutPlayerListHeaderFooter = (PacketObject)AnteCedentium.INSTANCE.packetReflections.invoke("PacketPlayOutPlayerListHeaderFooter");
+                packetPlayOutPlayerListHeaderFooter.setDeclaredField("a", header);
 
                 double tps = MathUtil.round(Bukkit.getTPS()[0], 2);
-                b.set(packetPlayOutPlayerListHeaderFooter, chatTextClass.getConstructors()[0].newInstance("\n" +
+                packetPlayOutPlayerListHeaderFooter.setDeclaredField("b", chatTextClass.getConstructors()[0].newInstance("\n" +
                         "" +
                         "§7tps: §a" + ((tps>20D)?20D:tps) + " §7ping: §f" + ping + " §7players: §f" + Bukkit.getOnlinePlayers().size() + " §7uptime: §f" + PlaceholderAPI.setPlaceholders(player, "%server_uptime%") + "\n" +
                         "" +
@@ -71,7 +65,7 @@ public class TabWorker extends Worker {
 
                 Class packetMasterClass = Class.forName("net.minecraft.server." + getServerVersion() + ".Packet");
                 Object playerConnection = handle.getClass().getField("playerConnection").get(handle);
-                playerConnection.getClass().getMethod("sendPacket", packetMasterClass).invoke(playerConnection, packetPlayOutPlayerListHeaderFooter);
+                playerConnection.getClass().getMethod("sendPacket", packetMasterClass).invoke(playerConnection, packetPlayOutPlayerListHeaderFooter.getInstance());
             }
         } catch (Exception exception) { exception.printStackTrace(); }
     }

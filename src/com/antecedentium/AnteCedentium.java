@@ -6,6 +6,7 @@ import com.antecedentium.events.DonkeyChestListener;
 import com.antecedentium.events.EndGatewayListener;
 import com.antecedentium.events.GodModeListener;
 import com.antecedentium.events.PacketListener;
+import com.antecedentium.reflections.packet.PacketReflections;
 import com.antecedentium.worker.workers.TabWorker;
 import com.antecedentium.worker.workers.WorldStatsWorker;
 import org.bukkit.Bukkit;
@@ -15,6 +16,7 @@ public class AnteCedentium extends JavaPlugin {
     public static AnteCedentium INSTANCE;
     public WorldStatsWorker statsWorker;
     public CommandHandler commandHandler;
+    public PacketReflections packetReflections;
 
     @Override
     public void onEnable() {
@@ -24,6 +26,10 @@ public class AnteCedentium extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveConfig();
 
+        /* Reflections */
+        this.packetReflections = new PacketReflections();
+
+        /* Workers */
         statsWorker = new WorldStatsWorker();
         new TabWorker();
 
