@@ -21,6 +21,9 @@ public class CommandHandler implements CommandExecutor {
         new KillCommand();
         new StopCommand(); /* antecedentium.command.stop */
         new EveryoneCommand(); /* antecedentium.command.everyone */
+        new ForceTPThingCommand(); /* antecedentium.command.forcetp */
+        new EnderTPCommand(); /* antecedentium.command.endertp */
+        new VanishCommand(); /* antecedentium.command.vanish */
     }
 
     @Override

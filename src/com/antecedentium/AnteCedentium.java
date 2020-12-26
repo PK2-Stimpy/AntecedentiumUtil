@@ -43,6 +43,7 @@ public class AnteCedentium extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new DonkeyChestListener(), this);
         Bukkit.getPluginManager().registerEvents(new GodModeListener(), this);
         Bukkit.getPluginManager().registerEvents(new EndGatewayListener(), this);
+        Bukkit.getPluginManager().registerEvents(new VanishListener(), this);
 
         Bukkit.getPluginManager().registerEvents(new com.antecedentium.reflections.craftplayer.listener.JoinQuitListen(), this);
     }

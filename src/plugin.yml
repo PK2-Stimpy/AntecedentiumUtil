@@ -40,3 +40,12 @@ commands:
   everyone:
     usage: /everyone <message>
     description: Makes everyone chat.
+  forcetp:
+    usage: /forcetp <x> <y> <z> <yaw> <pitch>
+    description: ForceTP testing.
+  endertp:
+    usage: /endertp <x> <y> <z>
+    description: EnderTP testing.
+  vanish:
+    usage: /vanish
+    description: Vanishes you.
