@@ -18,6 +18,6 @@ public class Reflections {
         reflections.add(this);
     }
 
-    public Object invoke() { return new NotImplementedException(); }
-    public Object invoke(Object... args) { return new NotImplementedException(); }
+    public Object invoke() { throw new NotImplementedException(); }
+    public Object invoke(Object... args) { throw new NotImplementedException(); }
 }

@@ -1,6 +1,8 @@
 package com.antecedentium.worker.workers;
 
 import com.antecedentium.AnteCedentium;
+import com.antecedentium.reflections.craftplayer.ReflectionUser;
+import com.antecedentium.reflections.craftplayer.obj.CraftPlayerObject;
 import com.antecedentium.reflections.packet.PacketObject;
 import com.antecedentium.util.MathUtil;
 import com.antecedentium.worker.Worker;
@@ -44,9 +46,8 @@ public class TabWorker extends Worker {
                     headerString.toString() + "\n");
 
             for(Player player : Bukkit.getOnlinePlayers()) {
-                Class<?> craftPlayer = Class.forName("org.bukkit.craftbukkit." + getServerVersion() + ".entity.CraftPlayer");
-                Object handle = craftPlayer.cast(player).getClass().getMethod("getHandle").invoke(craftPlayer.cast(player));
-                int ping = handle.getClass().getDeclaredField("ping").getInt(handle);
+                CraftPlayerObject craftPlayer = ReflectionUser.get(player).craftPlayer;
+                int ping = craftPlayer.getHandle()._ping();
 
                 PacketObject packetPlayOutPlayerListHeaderFooter = (PacketObject)AnteCedentium.INSTANCE.packetReflections.invoke("PacketPlayOutPlayerListHeaderFooter");
                 packetPlayOutPlayerListHeaderFooter.setDeclaredField("a", header);
@@ -64,8 +65,7 @@ public class TabWorker extends Worker {
                         "\n"));
 
                 Class packetMasterClass = Class.forName("net.minecraft.server." + getServerVersion() + ".Packet");
-                Object playerConnection = handle.getClass().getField("playerConnection").get(handle);
-                playerConnection.getClass().getMethod("sendPacket", packetMasterClass).invoke(playerConnection, packetPlayOutPlayerListHeaderFooter.getInstance());
+                craftPlayer.getHandle()._playerConnection().sendPacket(packetPlayOutPlayerListHeaderFooter.getInstance());
             }
         } catch (Exception exception) { exception.printStackTrace(); }
     }
