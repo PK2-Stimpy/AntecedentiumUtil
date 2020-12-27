@@ -13,20 +13,20 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 
 public class VanishCommand extends Command {
-    public static ArrayList<Player> vanished = new ArrayList<>();
+    public static ArrayList<String> vanished = new ArrayList<>();
     public static boolean exists(Player target) {
-        for(Player player : vanished)
-            if(player.getName().contentEquals(target.getName()))
+        for(String player : vanished)
+            if(player.contentEquals(target.getName()))
                 return true;
         return false;
     }
     public static void add(Player player) {
         if(!exists(player))
-            vanished.add(player);
+            vanished.add(player.getName());
     }
     public static void rem(Player player) {
         if(exists(player))
-            vanished.remove(player);
+            vanished.remove(player.getName());
     }
     public static void vanish(Player target, boolean shouldVanish) {
         for(Player player : Bukkit.getOnlinePlayers())
