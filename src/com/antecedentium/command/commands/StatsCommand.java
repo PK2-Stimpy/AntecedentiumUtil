@@ -16,6 +16,7 @@ public class StatsCommand extends Command {
     public void run(CommandSender sender, String[] args) throws InvalidUsageException {
         super.run(sender, args);
 
-        sender.sendMessage(ChatColor.GREEN + "World size is: " + ChatColor.BOLD + INSTANCE.statsWorker.getWorldSize() + " / " + INSTANCE.getConfig().getString("replacements.max-storage"));
+        sender.sendMessage(ChatColor.GREEN + "World size is: " + ChatColor.BOLD + INSTANCE.statsWorker.getWorldSize() + "\n" +
+                            ChatColor.GREEN + "Free space: " + ChatColor.BOLD + INSTANCE.statsWorker.freeSpace());
     }
 }

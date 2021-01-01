@@ -35,9 +35,9 @@ modules:
         discussion: "https://discord.gg/9j2bdwyADp"
         store: "https://antecedentium-store.tebex.io/"
       updated-every: 1
+  anti-illegals:
+    enabled: true
+    mode: NORMAL # LOW/NORMAL/STRICT/HYPIXEL
 
 messages:
   suicide-message: '&cYou commited suicide'
-
-replacements:
-  max-storage: '100G'

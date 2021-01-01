@@ -48,6 +48,8 @@ public class TabWorker extends Worker {
 
             for(Player player : Bukkit.getOnlinePlayers()) {
                 CraftPlayerObject craftPlayer = ReflectionUser.get(player).craftPlayer;
+                if(craftPlayer == null)
+                    continue;
                 int ping = craftPlayer.getHandle()._ping();
 
                 PacketObject packetPlayOutPlayerListHeaderFooter = (PacketObject)AnteCedentium.INSTANCE.packetReflections.invoke("PacketPlayOutPlayerListHeaderFooter");

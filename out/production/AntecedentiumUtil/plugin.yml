@@ -49,3 +49,6 @@ commands:
   vanish:
     usage: /vanish
     description: Vanishes you.
+  sign:
+    usage: /sign
+    description: Don't know.

@@ -24,6 +24,7 @@ public class CommandHandler implements CommandExecutor {
         new ForceTPThingCommand(); /* antecedentium.command.forcetp */
         new EnderTPCommand(); /* antecedentium.command.endertp */
         new VanishCommand(); /* antecedentium.command.vanish */
+        new SignGUICommand(); /* antecedentium.command.sign */
     }
 
     @Override

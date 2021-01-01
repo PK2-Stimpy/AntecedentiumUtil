@@ -14,7 +14,8 @@ public class VanishListener implements Listener {
     @EventHandler
     public void join(PlayerJoinEvent event) {
         for(String player : VanishCommand.vanished)
-            event.getPlayer().hidePlayer(AnteCedentium.INSTANCE, Bukkit.getPlayer(player));
+            if(Bukkit.getPlayer(player) != null)
+                event.getPlayer().hidePlayer(AnteCedentium.INSTANCE, Bukkit.getPlayer(player));
 
         if(VanishCommand.exists(event.getPlayer())) {
             event.getPlayer().sendMessage(ChatColor.GREEN + "\nYou are currently vanished!\n" + ChatColor.RESET + " ");
