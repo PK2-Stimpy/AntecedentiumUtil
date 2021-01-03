@@ -36,6 +36,7 @@ public class CommandHandler implements CommandExecutor {
                     if(command.permission != "" && !((Player)sender).hasPermission(command.permission))
                         sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command!");
                     else command.run(sender, args);
+                else command.run(sender, args);
             }
             catch (InvalidUsageException exception) { sender.sendMessage(ChatColor.RED + "/" + label.toLowerCase() + " " + command.usage); }
 

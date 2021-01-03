@@ -38,6 +38,12 @@ modules:
   anti-illegals:
     enabled: true
     mode: NORMAL # LOW/NORMAL/STRICT/HYPIXEL
+  anti-spawnhome:
+    enabled: true
+    blocks: 800
+    messages:
+      spawn-message: '&cYou are too close to spawn, you need to be &l%blocks% blocks &caway from spawn to use /home.'
+      vehicle-message: "&cYou can't use /home while inside a vehicle!"
 
 messages:
   suicide-message: '&cYou commited suicide'
