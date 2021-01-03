@@ -58,7 +58,7 @@ public class TabWorker extends Worker {
                 double tps = MathUtil.round(Bukkit.getTPS()[0], 2);
                 packetPlayOutPlayerListHeaderFooter.setDeclaredField("b", chatTextClass.getConstructors()[0].newInstance("\n" +
                         "" +
-                        "§7tps: §a" + ((tps>20D)?20D:tps) + " §7ping: §f" + ping + " §7players: §f" + (Bukkit.getOnlinePlayers().size() - VanishCommand.vanished.size()) + " §7uptime: §f" + PlaceholderAPI.setPlaceholders(player, "%server_uptime%") + "\n" +
+                        "§7tps: §a" + ((tps>20D)?20D:tps) + " §7ping: §f" + ping + " §7players: §f" + (Bukkit.getOnlinePlayers().size() - VanishCommand.vanished.stream().filter(p -> Bukkit.getPlayer(p) != null).toArray().length) + " §7uptime: §f" + PlaceholderAPI.setPlaceholders(player, "%server_uptime%") + "\n" +
                         "" +
                         "\n" +
                         "§7contact: " + AnteCedentium.INSTANCE.getConfig().getString("modules.tab.config.footer.contact") + "\n" +
