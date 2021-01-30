@@ -35,7 +35,20 @@ public class StopCommand extends Command {
                 Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', AnteCedentium.INSTANCE.getConfig().getString("command-config.stop-command.min1")));
                 Thread.sleep(60000);
                 Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', AnteCedentium.INSTANCE.getConfig().getString("command-config.stop-command.now")));
-                Thread.sleep(2000);
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', AnteCedentium.INSTANCE.getConfig().getString("command-config.stop-command.now")));
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', AnteCedentium.INSTANCE.getConfig().getString("command-config.stop-command.now")));
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', AnteCedentium.INSTANCE.getConfig().getString("command-config.stop-command.now")));
+                Thread.sleep(500);
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', AnteCedentium.INSTANCE.getConfig().getString("command-config.stop-command.now")));
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', AnteCedentium.INSTANCE.getConfig().getString("command-config.stop-command.now")));
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', AnteCedentium.INSTANCE.getConfig().getString("command-config.stop-command.now")));
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', AnteCedentium.INSTANCE.getConfig().getString("command-config.stop-command.now")));
+                Thread.sleep(500);
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', AnteCedentium.INSTANCE.getConfig().getString("command-config.stop-command.now")));
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', AnteCedentium.INSTANCE.getConfig().getString("command-config.stop-command.now")));
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', AnteCedentium.INSTANCE.getConfig().getString("command-config.stop-command.now")));
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', AnteCedentium.INSTANCE.getConfig().getString("command-config.stop-command.now")));
+                Thread.sleep(1000);
                 Bukkit.shutdown();
             } catch (Exception exception) { exception.printStackTrace(); }
         });

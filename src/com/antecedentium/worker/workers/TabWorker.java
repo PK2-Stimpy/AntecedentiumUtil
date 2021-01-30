@@ -11,7 +11,9 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Field;
+import javax.management.*;
+import java.lang.management.ManagementFactory;
+import com.sun.management.OperatingSystemMXBean;
 import java.util.List;
 
 public class TabWorker extends Worker {
@@ -58,7 +60,8 @@ public class TabWorker extends Worker {
                 double tps = MathUtil.round(Bukkit.getTPS()[0], 2);
                 packetPlayOutPlayerListHeaderFooter.setDeclaredField("b", chatTextClass.getConstructors()[0].newInstance("\n" +
                         "" +
-                        "§7tps: §a" + ((tps>20D)?20D:tps) + " §7ping: §f" + ping + " §7players: §f" + (Bukkit.getOnlinePlayers().size() - VanishCommand.vanished.stream().filter(p -> Bukkit.getPlayer(p) != null).toArray().length) + " §7uptime: §f" + PlaceholderAPI.setPlaceholders(player, "%server_uptime%") + "\n" +
+                        "§7tps: §a" + PlaceholderAPI.setPlaceholders(player, "%server_tps_1_colored%") + " §7ping: §f" + ping + " §7players: §f" + (Bukkit.getOnlinePlayers().size() - VanishCommand.vanished.stream().filter(p -> Bukkit.getPlayer(p) != null).toArray().length) + " §7uptime: §f" + PlaceholderAPI.setPlaceholders(player, "%server_uptime%") + "\n" +
+                        "§7ram: §f" + PlaceholderAPI.setPlaceholders(player, "%server_ram_used%") + " MB §7unique_players: §f" + PlaceholderAPI.setPlaceholders(player, "%server_unique_joins%") + "\n" +
                         "" +
                         "\n" +
                         "§7contact: " + AnteCedentium.INSTANCE.getConfig().getString("modules.tab.config.footer.contact") + "\n" +

@@ -5,6 +5,7 @@ import com.antecedentium.command.CommandHandler;
 import com.antecedentium.events.*;
 import com.antecedentium.reflections.craftplayer.CraftPlayerReflections;
 import com.antecedentium.reflections.packet.PacketReflections;
+import com.antecedentium.worker.workers.ChestLagWorker;
 import com.antecedentium.worker.workers.TabWorker;
 import com.antecedentium.worker.workers.WorldStatsWorker;
 import org.bukkit.Bukkit;
@@ -32,6 +33,7 @@ public class AnteCedentium extends JavaPlugin {
         /* Workers */
         statsWorker = new WorldStatsWorker();
         new TabWorker();
+        new ChestLagWorker();
 
         /* Commands */
         commandHandler = new CommandHandler();
@@ -46,6 +48,9 @@ public class AnteCedentium extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new VanishListener(), this);
         Bukkit.getPluginManager().registerEvents(new AntiIllegalListener(), this);
         Bukkit.getPluginManager().registerEvents(new AdditionalCommandsListener(), this);
+        Bukkit.getPluginManager().registerEvents(new NoRecipesListener(), this);
+        Bukkit.getPluginManager().registerEvents(new AntiChestLagListener(), this);
+        Bukkit.getPluginManager().registerEvents(new WaterLagListener(), this);
 
         Bukkit.getPluginManager().registerEvents(new com.antecedentium.reflections.craftplayer.listener.JoinQuitListen(), this);
     }

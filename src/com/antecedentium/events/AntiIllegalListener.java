@@ -6,13 +6,16 @@ import com.antecedentium.AnteCedentium;
 import com.antecedentium.events.enums.checks.AICheckEnum;
 import com.antecedentium.events.event.PacketReadEvent;
 import com.antecedentium.events.event.PacketWriteEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import com.antecedentium.worker.workers.ChestLagWorker;
+import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Dispenser;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -22,12 +25,20 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.*;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public class AntiIllegalListener implements Listener {
     public static AICheckEnum getCurrentCheck() { return AnteCedentium.INSTANCE.getConfig().getBoolean("modules.anti-illegals.enabled")?AICheckEnum.valueOf(AnteCedentium.INSTANCE.getConfig().getString("modules.anti-illegals.mode")):NONE; }
+
+    public static boolean checkDispenser(Block block) {
+        return (block.getY() == 255
+                && block.getType() == Material.DISPENSER);
+    }
 
     public static boolean illegalItemCheck(ItemStack itemStack, Material... materials) {
         for(Material material : materials)
@@ -125,7 +136,7 @@ public class AntiIllegalListener implements Listener {
                 itemStack.setItemMeta(bookMeta);
             }
         }
-        if(lvl >= HYPIXEL.lvl) { /* IS YOUR SERVER ANARCHY? */
+        if(lvl >= HYPIXEL.lvl) {
             if(itemStack.getType() == Material.FIREWORK) {
                 FireworkMeta fireworkMeta = (FireworkMeta)itemStack.getItemMeta();
                 if(fireworkMeta.getEffects().size() > 10) {
@@ -145,6 +156,30 @@ public class AntiIllegalListener implements Listener {
         }
 
         return illegal;
+    }
+
+    public AntiIllegalListener() {
+        BukkitTask bukkitTask = new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (World world : Bukkit.getWorlds())
+                    for (Chunk chunk : world.getLoadedChunks())
+                        for (int x = 0; x < 16; x++)
+                            for (int z = 0; z < 16; z++) {
+                                Block block = chunk.getBlock(x, 255, z);
+                                if (checkDispenser(block)) {
+                                    block.breakNaturally();
+                                    break;
+                                }
+                                if(block.getType() == Material.DISPENSER) {
+                                    Dispenser dispenser = (Dispenser)block;
+                                    for(ItemStack itemStack : dispenser.getInventory().getContents())
+                                        if(itemStack.getType() == Material.FLINT_AND_STEEL)
+                                            dispenser.getInventory().remove(itemStack);
+                                }
+                            }
+            }
+        }.runTaskTimer(AnteCedentium.INSTANCE, 1L, 19L);
     }
 
     @EventHandler
@@ -179,8 +214,13 @@ public class AntiIllegalListener implements Listener {
             event.setCancelled(true);
         }
 
-        if(lvl >= STRICT.lvl) /* CAN CAUSE LAG */
-            event.setCancelled(runItem(event.getPlayer().getInventory(), event.getItemInHand()));
+        if(lvl >= STRICT.lvl) { /* CAN CAUSE LAG */
+            boolean illegal = runItem(event.getPlayer().getInventory(), event.getItemInHand());
+
+            event.setCancelled(illegal);
+            if(illegal)
+                event.getPlayer().getInventory().remove(event.getItemInHand());
+        }
     }
 
     @EventHandler
@@ -197,5 +237,11 @@ public class AntiIllegalListener implements Listener {
 
         if(lvl >= STRICT.lvl) /* CAN CAUSE LAG */
             event.setCancelled(runItem(event.getPlayer().getInventory(), event.getItem()));
+    }
+
+    @EventHandler
+    public void onPlace(BlockPlaceEvent event) {
+        if(checkDispenser(event.getBlockPlaced()))
+            event.getBlockPlaced().breakNaturally();
     }
 }

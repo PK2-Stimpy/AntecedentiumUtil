@@ -44,6 +44,15 @@ modules:
     messages:
       spawn-message: '&cYou are too close to spawn, you need to be &l%blocks% blocks &caway from spawn to use /home.'
       vehicle-message: "&cYou can't use /home while inside a vehicle!"
+  recipe-lag:
+    enabled: true
+  chest-lag:
+    enabled: true
+    config:
+      max-spam: 16
+      books-delete: true
+    messages:
+      kick: '&cHello'
 
 messages:
   suicide-message: '&cYou commited suicide'
