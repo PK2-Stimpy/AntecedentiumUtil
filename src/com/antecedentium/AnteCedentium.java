@@ -51,6 +51,7 @@ public class AnteCedentium extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new NoRecipesListener(), this);
         Bukkit.getPluginManager().registerEvents(new AntiChestLagListener(), this);
         Bukkit.getPluginManager().registerEvents(new WaterLagListener(), this);
+        Bukkit.getPluginManager().registerEvents(new LightLagListener(this), this);
 
         Bukkit.getPluginManager().registerEvents(new com.antecedentium.reflections.craftplayer.listener.JoinQuitListen(), this);
     }
