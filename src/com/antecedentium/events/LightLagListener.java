@@ -1,68 +1,94 @@
 package com.antecedentium.events;
 
 import com.antecedentium.AnteCedentium;
-import org.bukkit.Location;
+import org.bukkit.ChatColor;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class LightLagListener implements Listener {
-    HashMap<Player, Location> lastPlaced = new HashMap<>();
-    HashMap<Player, Integer> amount = new HashMap<>();
-    HashMap<Player, Boolean> nigMap = new HashMap<>();
+    public class Vector3D {
+        int     x = 0,
+                y = 0,
+                z = 0;
+        public Vector3D(int x, int y, int z) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+        public Vector3D() {}
+
+        public boolean equals(int x, int y, int z) { return(this.x == x && this.y == y && this.z == z); }
+        public void set(int x, int y, int z) { this.x = x; this.y = y; this.z = z; }
+    }
+    public class BLOCK_DATA {
+        public final Vector3D pos;
+        public int amount;
+
+        public BLOCK_DATA(int x, int y, int z, int amount) {
+            this.pos = new Vector3D();
+            pos.x = x;
+            pos.y = y;
+            pos.z = z;
+            this.amount = amount;
+        }
+
+        public BLOCK_DATA() {
+            this.pos = new Vector3D();
+            this.amount = 0;
+        }
+    }
+    private HashMap<Player, BLOCK_DATA> playerData;
 
     AnteCedentium plugin;
-    int maxSpam;
-    boolean enabled;
-    String kick;
 
     public LightLagListener(AnteCedentium plugin) {
         this.plugin = plugin;
-        this.maxSpam = plugin.getConfig().getInt("modules.light-lag.config.max-spam");
-        this.enabled = plugin.getConfig().getBoolean("modules.light-lag.enabled");
-        this.kick = plugin.getConfig().getString("modules.light-lag.messages.kick");
-
-        BukkitTask bukkitTask = new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (Map.Entry<Player, Integer> violationEntry : amount.entrySet()) {
-                    if (violationEntry.getValue() > 0)
-                        violationEntry.setValue(violationEntry.getValue() - 1);
-                }
-            }
-        }.runTaskTimer(plugin, 1L, 19L);
+        this.playerData = new HashMap<>();
     }
 
-    @EventHandler
-    public void onBlockPlace(BlockPlaceEvent event) {
-        if(!enabled)
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void blockPlace(BlockPlaceEvent event) {
+        if(!plugin.getConfig().getBoolean("modules.light-lag.enabled"))
             return;
+        int maxSpam = plugin.getConfig().getInt("modules.light-lag.config.max-spam");
+        String kickMessage = plugin.getConfig().getString("modules.light-lag.messages.kick");
 
         Player player = event.getPlayer();
-        nigMap.putIfAbsent(player, false);
-        nigMap.put(player, !nigMap.get(player));
-        if (nigMap.get(player)) {
-            lastPlaced.put(player, event.getBlock().getLocation());
-        } else {
-            if (lastPlaced.get(player).equals(event.getBlock().getLocation())) {
-                if (amount.containsKey(player)) {
-                    amount.put(player, amount.get(player) + 1);
-                } else {
-                    amount.put(player, 0);
-                }
-                if (amount.get(player) >= maxSpam / 2) {
-                    player.kickPlayer(kick);
-                    lastPlaced.remove(player);
-                    amount.remove(player);
-                    nigMap.remove(player);
-                }
-            }
+        Block block = event.getBlock();
+        if(!playerData.containsKey(player))
+            playerData.put(player, new BLOCK_DATA(block.getX(), block.getY(), block.getZ(), 1));
+
+        BLOCK_DATA blockData = playerData.get(player);
+        if(!blockData.pos.equals(block.getX(), block.getY(), block.getZ())) {
+            blockData.pos.set(block.getX(), block.getY(), block.getZ());
+            blockData.amount = 1;
+            return;
         }
+        if(blockData.amount > maxSpam) {
+            playerData.remove(player);
+            player.kickPlayer(ChatColor.translateAlternateColorCodes('&', kickMessage));
+            return;
+        }
+        blockData.amount++;
     }
-} 
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void playerQuit(PlayerQuitEvent event) {
+        if(playerData.containsKey(event.getPlayer()))
+            playerData.remove(event.getPlayer());
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void playerKick(PlayerKickEvent event) {
+        if(playerData.containsKey(event.getPlayer()))
+            playerData.remove(event.getPlayer());
+    }
+}
