@@ -1,15 +1,27 @@
 links:
   shop: 'https://antecedentium-store.tebex.io/'
-  discord: 'https://discord.gg/acvqsKDQkV'
+  discord: 'https://discord.gg/XVprA5BFCF'
 
 command-config:
   stop-command:
-    min5: '&c&lBROADCAST  &eRestarting main server in 5 minutes.'
-    min4: '&c&lBROADCAST  &eRestarting main server in 4 minutes.'
-    min3: '&c&lBROADCAST  &eRestarting main server in 3 minutes.'
-    min2: '&c&lBROADCAST  &eRestarting main server in 2 minutes.'
-    min1: '&c&lBROADCAST  &eRestarting main server in 1 minute.'
-    now: '&c&lBROADCAST  &eRestarting main server NOW!'
+    min5: '&e[SERVER] Server restarting in 5 minutes...'
+    min4: '&e[SERVER] Server restarting in 4 minutes...'
+    min3: '&e[SERVER] Server restarting in 3 minutes...'
+    min2: '&e[SERVER] Server restarting in 2 minutes...'
+    min1: '&e[SERVER] Server restarting in 1 minute...'
+    now: '&e[SERVER] Server restarting NOW...'
+  help-command:
+    - "&e/help &r- Help command."
+    - "&e/buy &r- Shows the shop url."
+    - "&e/discord &r- Shows the discord url."
+    - "&e/stats &r- Shows some info about the server."
+    - "&e/joindate <player> &r- Shows the exact join date of a player."
+    - "&e/kill &r- Suicide."
+    - "&e/w <player> <message> &r- Whisper someone."
+    - "&e/r <message> &r- Reply to the last one who talked with you."
+    - "&e/ignore <player> &r- Ignore whispers and messages from a player."
+    - "&e/home <home> &r- Teleports you to your home called \"home\"."
+    - "&e/sethome <name> &r- Sets a home with a name."
 
 modules:
   donkey-dupe:
@@ -27,17 +39,19 @@ modules:
   tab:
     enabled: true
     config:
+      name: 'antecedentium'
+      colored-name: '&6Antece&edentium'
       info:
-        - "Updated AntecedentiumUtil plugin and added custom tab"
-        - "to the server."
+        - New death messages
+        - Optimized the server a bit
       footer:
-        contact: "terroristswin777@gmail.com"
-        discussion: "https://discord.gg/9j2bdwyADp"
-        store: "https://antecedentium-store.tebex.io/"
-      updated-every: 1
+        contact: 'terroristswin777@gmail.com'
+        discussion: 'https://discord.gg/XVprA5BFCF'
+        store: 'https://antecedentium-store.tebex.io/'
+      updated-every: 5
   anti-illegals:
-    enabled: true
-    mode: NORMAL # LOW/NORMAL/STRICT/HYPIXEL
+    enabled: false
+    mode: NONE
   anti-spawnhome:
     enabled: true
     blocks: 800
@@ -60,6 +74,44 @@ modules:
       crash: false
     messages:
       kick: '&cHello'
+  chunk-ban:
+    enabled: true
+    config:
+      tile-entity-max: 512
+      skull-max: 100
+    messages:
+      prevent: '&6Chunkbanning is not allowed'
+  32k-damage:
+    enabled: true
+    config:
+      apply-sword: true
+  nether-roof:
+    enabled: true
+    config:
+      level: 127
+      damage: 10.0
+  lag-prevention:
+    enabled: true
+    modules:
+      elytra:
+        enabled: true
+        config:
+          tps: 15.0
+          overworld: true
+          nether: false
+          end: false
+      physics:
+        enabled: true
+        config:
+          tps: 10.0
+      redstone:
+        enabled: true
+        config:
+          tps: 14.0
+  redstone-limit:
+    enabled: true
+    config:
+      max-redstone: 16
 
 messages:
-  suicide-message: '&cYou commited suicide'
+  suicide-message: 'rip'

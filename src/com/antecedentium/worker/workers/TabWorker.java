@@ -44,7 +44,7 @@ public class TabWorker extends Worker {
             Class<?> chatTextClass = Class.forName("net.minecraft.server." + getServerVersion() + ".ChatComponentText");
             Object header = chatTextClass.getConstructors()[0].newInstance("\n" +
                     "" +
-                    "§6Antece§edentium\n" +
+                    AnteCedentium.INSTANCE.getConfig().getString("modules.tab.config.colored-name").replaceAll("&", "§") + "\n" +
                     "\n" +
                     headerString.toString() + "\n");
 
@@ -67,7 +67,7 @@ public class TabWorker extends Worker {
                         "§7contact: " + AnteCedentium.INSTANCE.getConfig().getString("modules.tab.config.footer.contact") + "\n" +
                         "§7discussion: " + AnteCedentium.INSTANCE.getConfig().getString("modules.tab.config.footer.discussion") + "\n" +
                         "§7donate: " + AnteCedentium.INSTANCE.getConfig().getString("modules.tab.config.footer.store") + "\n" +
-                        "§7These are the only official antecedentium websites and contacts" +
+                        "§7These are the only official " + AnteCedentium.INSTANCE.getConfig().getString("modules.tab.config.name") + " websites and contacts" +
                         "\n"));
 
                 Class packetMasterClass = Class.forName("net.minecraft.server." + getServerVersion() + ".Packet");

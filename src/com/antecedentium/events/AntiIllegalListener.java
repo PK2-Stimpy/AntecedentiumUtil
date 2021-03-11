@@ -36,7 +36,7 @@ public class AntiIllegalListener implements Listener {
     public static AICheckEnum getCurrentCheck() { return AnteCedentium.INSTANCE.getConfig().getBoolean("modules.anti-illegals.enabled")?AICheckEnum.valueOf(AnteCedentium.INSTANCE.getConfig().getString("modules.anti-illegals.mode")):NONE; }
 
     public static boolean checkDispenser(Block block) {
-        return (block.getY() == 255
+        return (((block.getY() == 255) || (block.getY() == 0))
                 && block.getType() == Material.DISPENSER);
     }
 
@@ -162,6 +162,10 @@ public class AntiIllegalListener implements Listener {
         BukkitTask bukkitTask = new BukkitRunnable() {
             @Override
             public void run() {
+                for(Player player : Bukkit.getOnlinePlayers())
+                    if(player.getHealth() > 20)
+                        player.setHealth(1);
+
                 for (World world : Bukkit.getWorlds())
                     for (Chunk chunk : world.getLoadedChunks())
                         for (int x = 0; x < 16; x++)

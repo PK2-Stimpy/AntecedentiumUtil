@@ -25,6 +25,7 @@ public class CommandHandler implements CommandExecutor {
         new EnderTPCommand(); /* antecedentium.command.endertp */
         new VanishCommand(); /* antecedentium.command.vanish */
         new SignGUICommand(); /* antecedentium.command.sign */
+        // new QuitCommand(); /* antecedentium.command.reflect; Tests reflections. */
     }
 
     @Override
